@@ -8,6 +8,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.40.2.1593" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
@@ -15,6 +16,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LiveStandup.Shared\LiveStandup.Shared.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="sampleData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

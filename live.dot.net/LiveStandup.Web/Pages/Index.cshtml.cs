@@ -2,30 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LiveStandup.Shared.Models;
+using LiveStandup.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 
 namespace LiveStandup.Web.Pages
 {
     public class IndexModel : PageModel
     {
-        public List<string> ShowNames { get; } = new List<string>();
+        public IEnumerable<Show> Shows { get; private set; }
 
-
-        public void OnGet()
+        IYouTubeShowsService youTubeService;
+        public IndexModel(IYouTubeShowsService youTubeService)
         {
-            ShowNames.Add("ASP.NET Community Standup with the gRPC Team!");
-            ShowNames.Add("Xamarin: AndroidX with Jon Dick");
-            ShowNames.Add("Visual Studio: Unity with John Miller");
-            ShowNames.Add("Desktop: .NET Core for Desktop");
-            ShowNames.Add("ASP.NET Community Standup with the gRPC Team!");
-            ShowNames.Add("Xamarin: AndroidX with Jon Dick");
-            ShowNames.Add("Visual Studio: Unity with John Miller");
-            ShowNames.Add("Desktop: .NET Core for Desktop");
-            ShowNames.Add("ASP.NET Community Standup with the gRPC Team!");
-            ShowNames.Add("Xamarin: AndroidX with Jon Dick");
-            ShowNames.Add("Visual Studio: Unity with John Miller");
-            ShowNames.Add("Desktop: .NET Core for Desktop");
+            this.youTubeService = youTubeService;
+        }
+
+        public async Task OnGet()
+        {
+            Shows = await youTubeService.GetShows();
         }
     }
 }
