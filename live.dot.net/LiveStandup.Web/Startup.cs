@@ -34,7 +34,7 @@ namespace LiveStandup.Web
             });
 
             services.AddSingleton<IYouTubeShowsService, MockYouTubeShowsService>();
-
+            services.AddHealthChecks();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -52,6 +52,7 @@ namespace LiveStandup.Web
                 app.UseHsts();
             }
 
+            app.UseHealthChecks("/health");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
