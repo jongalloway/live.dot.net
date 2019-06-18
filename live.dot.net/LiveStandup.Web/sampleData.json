@@ -1,5 +1,17 @@
 [
   {
+    "Id": "SKnIzX6WFfI",
+    "Title": "ASP.NET Community Standup - June 18th, 2019 - ASP.NET Core 3.0 Preview 6 Release Party",
+    "HasTitle": true,
+    "Description": "Join members from the ASP.NET teams for our community standup covering great community contributions for ASP.NET, ASP.NET Core, and more.\n\nCommunity links for this week: https://www.theurlist.com/aspnet-standup-2019-06-11\nDan's demo app code: https://github.com/danroth27/BlazingPizza/\nBlazing Pizza workshop: http://aka.ms/blazorworkshop\n\nSuggest an idea for a standup: http://aka.ms/dotnet-standup-suggestion",
+    "ShowDate": "2019-06-19T17:33:31-07:00",
+    "IsNew": true,
+    "IsInFuture": false,
+    "Url": "https://www.youtube.com/watch?v=HxZTD0isAxQ&list=PL1rZQsJPBU2St9-Mz1Kaa7rofciyrwWVx&index=0",
+    "ThumbnailUrl": "https://i.ytimg.com/vi/HxZTD0isAxQ/mqdefault.jpg",
+    "Topic": null
+  },
+  {
     "Id": "HxZTD0isAxQ",
     "Title": "ASP.NET Community Standup - June 11th, 2019 - TEST DATA - Blazing Pizza Deep Dive with Daniel Roth",
     "HasTitle": true,

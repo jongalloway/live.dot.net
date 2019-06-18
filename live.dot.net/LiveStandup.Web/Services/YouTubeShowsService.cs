@@ -38,6 +38,14 @@ namespace LiveStandup.Web.Services
             YouTubePlaylistId = configuration["YouTube:PlaylistId"];
         }
 
+        public Task<VideoListResponse> GetLiveShows(YouTubeService youtubeService, string ids)
+        {
+            var request = youtubeService.Videos.List("liveStreamingDetails");
+            request.Id = ids;
+            request.MaxResults = 25;
+
+            return request.ExecuteAsync();
+        }
 
         public async Task<IEnumerable<Show>> GetShows(int numberOfShows = 25)
         {
@@ -58,17 +66,24 @@ namespace LiveStandup.Web.Services
             // Retrieve the list of videos uploaded to the authenticated user's channel.
             var response = await request.ExecuteAsync();
 
-            return response.Items.Select(item => new Show
+
+
+            var shows = response.Items.Select(item => new Show
             {
                 Id = item.Snippet.ResourceId.VideoId,
                 Title = item.Snippet.Title,
                 Description = item.Snippet.Description,
-                ShowDate = item.Snippet.PublishedAt.GetValueOrDefault(),
                 ThumbnailUrl = item.Snippet.Thumbnails.Medium.Url,
                 Url = GetVideoUrl(item.Snippet.ResourceId.VideoId,
                     YouTubePlaylistId, item.Snippet.Position.GetValueOrDefault())
             });
+
+            var ids = string.Join(',', shows.Select(show => show.Id).ToArray());
+            var liveResponse = await GetLiveShows(youtubeService, ids);
+            return shows;
         }
+
+
 
         public static string GetVideoUrl(string id, string playlistId, long itemIndex)
         {

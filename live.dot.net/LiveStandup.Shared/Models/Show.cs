@@ -15,6 +15,8 @@ namespace LiveStandup.Shared.Models
 
         public DateTimeOffset ShowDate { get; set; }
 
+        public string ShowDateString { get; set; }
+
         public bool IsNew => !IsInFuture && (DateTimeOffset.Now - ShowDate).TotalDays <= 14;
 
         public bool IsInFuture => ShowDate > DateTimeOffset.Now;
