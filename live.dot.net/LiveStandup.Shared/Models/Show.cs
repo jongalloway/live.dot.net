@@ -8,11 +8,29 @@ namespace LiveStandup.Shared.Models
         // Pa6qtu1wIs8
         public string Id { get; set; }
 
+        //Format: ".NET Community Standup - Monday, Day Year - Topic
         public string Title { get; set; }
 
-        public string ShortTitle { get; set; }
+        string shortTitle;
+        public string ShortTitle
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(shortTitle))
+                    return shortTitle;
 
-        public bool HasTitle => !string.IsNullOrEmpty(Title);
+                var pieces = Title?.Split('-');
+                if (pieces?.Count() > 2)
+                    shortTitle = pieces.Last();
+
+                return shortTitle;
+            }
+            set => shortTitle = value;
+        }
+
+        public bool HasTitle => !string.IsNullOrEmpty(ShortTitle);
+
+        public string DisplayTitle => HasTitle ? ShortTitle : Title;
 
         public string Description { get; set; }
         public DateTime ScheduledStartTime { get; set; }
@@ -40,36 +58,35 @@ namespace LiveStandup.Shared.Models
         public string ThumbnailUrl { get; set; }
 
         // ASP.NET, Xamarin, Desktop, Visual Studio
-        public string Topic { get; set; }
-    }
-
-    public static class ShowHelpers
-    {
-        public static string GetShortTitle(this string title)
+        string category;
+        public string Category
         {
-            return title.Split('-').LastOrDefault();
-        }
-        public static string GetTopic(this string title)
-        {
-            if (title.StartsWith("ASP.NET"))
-                return "ASP.NET";
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(category))
+                    return category;
 
-            if (title.StartsWith("Visual Studio") || title.StartsWith("Tooling"))
-                return "Visual Studio";
+                if (Title.StartsWith("ASP.NET"))
+                    category = "ASP.NET";
 
-            if (title.StartsWith("Xamarin") || title.StartsWith("Mobile"))
-                return "Xamarin";
+                if (Title.StartsWith("Visual Studio") || Title.StartsWith("Tooling"))
+                    category = "Visual Studio";
 
-            if (title.StartsWith("Languages"))
-                return "Languages & Runtime";
+                if (Title.StartsWith("Xamarin") || Title.StartsWith("Mobile"))
+                    category = "Xamarin";
 
-            if (title.StartsWith("Windows Desktop") || title.StartsWith("Desktop"))
-                return "Desktop";
+                if (Title.StartsWith("Languages"))
+                    category = "Languages & Runtime";
 
-            if (title.StartsWith("Cloud"))
-                return "Cloud";
+                if (Title.StartsWith("Windows Desktop") || Title.StartsWith("Desktop"))
+                    category = "Desktop";
 
-            return string.Empty;
+                if (Title.StartsWith("Cloud"))
+                    category = "Cloud";
+
+                return category;
+            }
+            set => category = value;
         }
     }
 }

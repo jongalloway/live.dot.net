@@ -88,8 +88,6 @@ namespace LiveStandup.Web.Services
             {
                 Id = item.Snippet.ResourceId.VideoId,
                 Title = item.Snippet.Title,
-                ShortTitle = item.Snippet.Title.GetShortTitle(),
-                Topic = item.Snippet.Title.GetTopic(),
                 Description = item.Snippet.Description,
                 ThumbnailUrl = item.Snippet.Thumbnails.Medium.Url,
                 Url = GetVideoUrl(item.Snippet.ResourceId.VideoId,

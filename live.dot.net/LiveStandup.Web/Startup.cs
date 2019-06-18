@@ -33,7 +33,7 @@ namespace LiveStandup.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSingleton<IYouTubeShowsService, YouTubeShowsService>();
+            services.AddSingleton<IYouTubeShowsService, MockYouTubeShowsService>();
             services.AddHealthChecks();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
