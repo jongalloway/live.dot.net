@@ -38,13 +38,29 @@ namespace LiveStandup.Web.Services
             YouTubePlaylistId = configuration["YouTube:PlaylistId"];
         }
 
-        public Task<VideoListResponse> GetLiveShows(YouTubeService youtubeService, string ids)
+        public async Task UpdateLiveStreamingDetails(YouTubeService youtubeService, IEnumerable<Show> shows)
         {
+
+            var ids = string.Join(',', shows.Select(show => show.Id).ToArray());
             var request = youtubeService.Videos.List("liveStreamingDetails");
             request.Id = ids;
             request.MaxResults = 25;
 
-            return request.ExecuteAsync();
+            var videos = (await request.ExecuteAsync()).Items;
+            
+
+            foreach(var show in shows)
+            {
+                var liveData = videos.FirstOrDefault(v => v.Id == show.Id)?.LiveStreamingDetails;
+                if (liveData == null)
+                    continue;
+
+                if (liveData.ScheduledStartTime.HasValue)
+                    show.ScheduledStartTime = liveData.ScheduledStartTime.Value;
+
+                show.ActualEndTime = liveData.ActualEndTime;
+                show.ActualStartTime = liveData.ActualStartTime;
+            }
         }
 
         public async Task<IEnumerable<Show>> GetShows(int numberOfShows = 25)
@@ -72,15 +88,17 @@ namespace LiveStandup.Web.Services
             {
                 Id = item.Snippet.ResourceId.VideoId,
                 Title = item.Snippet.Title,
+                ShortTitle = item.Snippet.Title.GetShortTitle(),
+                Topic = item.Snippet.Title.GetTopic(),
                 Description = item.Snippet.Description,
                 ThumbnailUrl = item.Snippet.Thumbnails.Medium.Url,
                 Url = GetVideoUrl(item.Snippet.ResourceId.VideoId,
                     YouTubePlaylistId, item.Snippet.Position.GetValueOrDefault())
-            });
+            }); ;
 
-            var ids = string.Join(',', shows.Select(show => show.Id).ToArray());
-            var liveResponse = await GetLiveShows(youtubeService, ids);
-            return shows;
+            await UpdateLiveStreamingDetails(youtubeService, shows);
+            
+            return shows.OrderByDescending(s => s.ScheduledStartTime);
         }
 
 
