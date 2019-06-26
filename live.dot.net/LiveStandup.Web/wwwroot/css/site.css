@@ -34,6 +34,47 @@ button.accept-policy {
   line-height: inherit;
 }
 
+/* Container holding the image and the text */
+.overlay-container {
+    position: relative;
+}
+
+/* Bottom left text */
+.bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+}
+
+/* Top left text */
+.top-left {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+}
+
+/* Top right text */
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+/* Bottom right text */
+.bottom-right {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+}
+
+/* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -54,3 +95,5 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
