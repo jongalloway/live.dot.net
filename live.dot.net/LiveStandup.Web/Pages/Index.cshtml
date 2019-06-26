@@ -21,7 +21,7 @@
                 }
                 else if (show.IsInFuture)
                 {
-                    <span class="badge badge-pill p-2 pr-3 pl-3 badge-info top-right">Upcoming: @show.ScheduledStartTime.ToLocalTime().ToShortDateString()</span>
+                    <span class="badge badge-pill p-2 pr-3 pl-3 badge-info top-right">Upcoming</span>
                 }
                 else if (show.IsOnAir)
                 {
@@ -37,6 +37,9 @@
 
                     <h5 class="card-title">@show.DisplayTitle</h5>
                     <a href="@show.Url" class="btn btn-primary">Go somewhere</a>
+                </div>
+                <div class="card-footer text-muted text-center">	
+                    @show.ScheduledStartTimeHumanized	
                 </div>
             </div>
         </div>
