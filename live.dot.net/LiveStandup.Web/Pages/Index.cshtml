@@ -13,27 +13,26 @@
     @foreach (var show in Model.Shows)
     {
         <div class="col-md-4">
-            <div class="card m-2 shadow" style="width:18rem;">                
+            <div class="card m-2 shadow" style="width:18rem;">
                 <img src="@show.ThumbnailUrl" class="card-img-top" alt="...">
+                @if (show.IsNew)
+                {
+                    <span class="badge badge-pill p-2 pr-3 pl-3 badge-success top-right">New</span>
+                }
+                else if (show.IsInFuture)
+                {
+                    <span class="badge badge-pill p-2 pr-3 pl-3 badge-info top-right">Upcoming: @show.ScheduledStartTime.ToLocalTime().ToShortDateString()</span>
+                }
+                else if (show.IsOnAir)
+                {
+                    <span class="badge badge-pill p-2 pr-3 pl-3 badge-danger top-right">Live</span>
+                }
 
                 <div class="card-body">
 
                     @if (!string.IsNullOrEmpty(show.Category))
                     {
                         <span class="badge badge-pill p-2 pr-3 pl-3 badge-primary">@show.Category</span>
-                    }
-
-                    @if (show.IsNew)
-                    {
-                        <span class="badge badge-pill p-2 pr-3 pl-3 badge-success">New</span>
-                    }
-                    else if (show.IsInFuture)
-                    {
-                        <span class="badge badge-pill p-2 pr-3 pl-3 badge-info">Upcoming: @show.ScheduledStartTime.ToLocalTime().ToShortDateString()</span>
-                    }
-                    else if (show.IsOnAir)
-                    {
-                        <span class="badge badge-pill p-2 pr-3 pl-3 badge-danger">Live</span>
                     }
 
                     <h5 class="card-title">@show.DisplayTitle</h5>
