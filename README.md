@@ -6,3 +6,9 @@ We're building this site live every week on https://www.twitch.tv/jamesmontemagn
 
 ## Contributing
 Feel free to file issues and send a pull request for issues only.
+
+Best way is to:
+
+1.) Fork Repo
+2.) Create a branch
+3.) Send a PR from your branch to master
