@@ -43,28 +43,28 @@ button.accept-policy {
 .bottom-left {
     position: absolute;
     bottom: 8px;
-    left: 16px;
+    left: 8px;
 }
 
 /* Top left text */
 .top-left {
     position: absolute;
     top: 8px;
-    left: 16px;
+    left: 8px;
 }
 
 /* Top right text */
 .top-right {
     position: absolute;
     top: 8px;
-    right: 16px;
+    right: 8px;
 }
 
 /* Bottom right text */
 .bottom-right {
     position: absolute;
     bottom: 8px;
-    right: 16px;
+    right: 8px;
 }
 
 /* Centered text */
