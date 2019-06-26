@@ -1,5 +1,13 @@
-﻿using System;
+﻿using Humanizer;
+using Newtonsoft.Json;
+using System;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
+
+// ClintonRocksmith cheered 1500 on June 25th 2019
+// h0usebesuch gifted 2 subs on June 25th 2019
+// LotanB gifted 1 sub on June 25th 2019
 
 namespace LiveStandup.Shared.Models
 {
@@ -12,6 +20,7 @@ namespace LiveStandup.Shared.Models
         public string Title { get; set; }
 
         string shortTitle;
+        [JsonIgnore]
         public string ShortTitle
         {
             get
@@ -28,8 +37,10 @@ namespace LiveStandup.Shared.Models
             set => shortTitle = value;
         }
 
+        [JsonIgnore]
         public bool HasTitle => !string.IsNullOrEmpty(ShortTitle);
 
+        [JsonIgnore]
         public string DisplayTitle => HasTitle ? ShortTitle : Title;
 
         public string Description { get; set; }
@@ -39,14 +50,15 @@ namespace LiveStandup.Shared.Models
 
         public DateTime? ActualEndTime { get; set; }
 
-        public string ShowDateString { get; set; }
-
+        [JsonIgnore]
         public bool IsNew => !IsInFuture &&
                              !IsOnAir &&
                              (DateTime.UtcNow - ScheduledStartTime).TotalDays <= 14;
 
+        [JsonIgnore]
         public bool IsInFuture => ScheduledStartTime > DateTime.UtcNow;
 
+        [JsonIgnore]
         public bool IsOnAir =>
             ActualStartTime.HasValue &&
             !ActualEndTime.HasValue;
@@ -87,6 +99,22 @@ namespace LiveStandup.Shared.Models
                 return category;
             }
             set => category = value;
+        }
+
+        [JsonIgnore]
+        public string ScheduledStartTimeHumanized
+        {
+            get
+            {
+                if ((DateTime.UtcNow - ScheduledStartTime).TotalDays <= 7)
+                    return ScheduledStartTime.Humanize();
+
+                var culture = CultureInfo.CurrentCulture;
+                var regex = new Regex("dddd[,]{0,1}");
+                var shortDatePattern = regex.Replace(culture.DateTimeFormat.LongDatePattern.Replace("MMMM", "MMM"), string.Empty).Trim();
+                return ScheduledStartTime.ToString($"{shortDatePattern}", culture);
+               
+            }
         }
     }
 }

@@ -92,7 +92,7 @@ namespace LiveStandup.Web.Services
                 ThumbnailUrl = item.Snippet.Thumbnails.Medium.Url,
                 Url = GetVideoUrl(item.Snippet.ResourceId.VideoId,
                     YouTubePlaylistId, item.Snippet.Position.GetValueOrDefault())
-            }); ;
+            }).ToList();
 
             await UpdateLiveStreamingDetails(youtubeService, shows);
             
