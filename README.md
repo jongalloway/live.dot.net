@@ -12,3 +12,4 @@ Best way is to:
 1. Fork Repo
 2. Create a branch
 3. Send a PR from your branch to master
+4. After accepted you can update your master from upstream master
