@@ -60,10 +60,13 @@ namespace LiveStandup.Web.Services
                     continue;
 
                 if (liveData.ScheduledStartTime.HasValue)
-                    show.ScheduledStartTime = liveData.ScheduledStartTime.Value;
+                    show.ScheduledStartTime = liveData.ScheduledStartTime.Value.ToUniversalTime();
 
-                show.ActualEndTime = liveData.ActualEndTime;
-                show.ActualStartTime = liveData.ActualStartTime;
+                if (liveData.ActualEndTime.HasValue)
+                    show.ActualEndTime = liveData.ActualEndTime.Value.ToUniversalTime();
+
+                if (liveData.ActualStartTime.HasValue)
+                    show.ActualStartTime = liveData.ActualStartTime.Value.ToUniversalTime();
             }
         }
 
@@ -89,7 +92,7 @@ namespace LiveStandup.Web.Services
             var shows = PlaylistItemsToShows(response);
 
             await UpdateLiveStreamingDetails(youtubeService, shows);
-
+                        
             return shows.OrderByDescending(s => s.ScheduledStartTime);
         }
 

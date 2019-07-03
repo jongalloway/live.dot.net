@@ -21,6 +21,11 @@ namespace LiveStandup.Web.Pages
     public class IndexModel : PageModel
     {
         public IEnumerable<Show> Shows { get; private set; }
+        public Show UpcomingShow { get; private set; }
+        public Show OnAirShow { get; private set; }
+
+        public bool HasUpcomingShow => UpcomingShow != null;
+        public bool IsOnAir => OnAirShow != null;
 
         IYouTubeShowsService youTubeService;
         public IndexModel(IYouTubeShowsService youTubeService)
@@ -31,6 +36,8 @@ namespace LiveStandup.Web.Pages
         public async Task OnGet()
         {
             Shows = await youTubeService.GetShows();
+            UpcomingShow = Shows.LastOrDefault(show => show.IsInFuture && !show.IsOnAir);
+            OnAirShow = Shows.FirstOrDefault(show => show.IsOnAir);
         }
     }
 }

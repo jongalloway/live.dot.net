@@ -4,14 +4,60 @@
     ViewData["Title"] = ".NET Community Standups";
 }
 
-<div class="text-center">
 
+<div class="jumbotron">
+    <div class="next-episode text-center">
+        @if(Model.IsOnAir)
+        {
+            <h2>On AIR!</h2>
+        }
+        else if (Model.HasUpcomingShow)
+        {
+            var startTime = Model.UpcomingShow.ScheduledStartTime;
+            <div id="nextShowDetails"
+                 data-utc-year="@startTime.Year"
+                 data-utc-month="@(startTime.Month-1)"
+                 data-utc-day="@startTime.Day"
+                 data-utc-hour="@startTime.Hour"
+                 data-utc-min="@startTime.Minute">
+                <h2>Next Episode Streaming Live on</h2>
+                <h2>
+                    <strong data-part="showTime" class="hidden">
+                        @startTime.ToString("u")
+                    </strong>
+                </h2>
+                <h2>
+                    <span data-part="countdown">&nbsp;</span>
+                </h2>
+            </div>
+            @*<div class="btn-group">
+                    <button id="addToCalendar" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add to calendar <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="addToCalendar">
+                        <li><a asp-action="GetiCal" asp-protocol="https">Download iCalendar (ICS) file</a></li>
+                        <li><a asp-action="GetiCal" asp-protocol="webcals">Add using webcal</a></li>
+                        <li><a href="@Model.AddToGoogleUrl" target="_blank">Add to Google Calendar</a></li>
+                    </ul>
+                </div>*@
+        }
+        else
+        {
+            <h2>Streaming Live Every Tuesday &amp; Thursday</h2>
+            <p>Alternating between 10:00 AM and 3:45 PM Pacific Time, week to week.</p>
+        }
+        <p>Check back here to watch &amp; ask questions then!</p>
+    </div>
 </div>
-
 
 <div class="row">
     @foreach (var show in Model.Shows)
     {
+        @if (show.IsOnAir)
+        {
+            continue;
+        }
+
         <div class="col-md-4">
             <div class="card m-2 shadow" style="width:18rem;">
                 <img src="@show.ThumbnailUrl" class="card-img-top" alt="...">
@@ -23,10 +69,7 @@
                 {
                     <span class="badge badge-pill p-2 pr-3 pl-3 badge-info top-right">Upcoming</span>
                 }
-                else if (show.IsOnAir)
-                {
-                    <span class="badge badge-pill p-2 pr-3 pl-3 badge-danger top-right">Live</span>
-                }
+
 
                 <div class="card-body">
 
@@ -38,10 +81,21 @@
                     <h5 class="card-title">@show.DisplayTitle</h5>
                     <a href="@show.Url" class="btn btn-primary">Go somewhere</a>
                 </div>
-                <div class="card-footer text-muted text-center">	
-                    @show.ScheduledStartTimeHumanized	
+                <div class="card-footer text-muted text-center">
+                    @show.ScheduledStartTimeHumanized
                 </div>
             </div>
         </div>
     }
- </div>
+</div>
+
+
+@if (Model.HasUpcomingShow)
+{
+    <script src="~/js/home.js"></script>
+    <script>
+        (function () {
+            window.siteJs.setNextShowDetails("nextShowDetails");
+        })();
+    </script>
+}

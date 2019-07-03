@@ -112,8 +112,7 @@ namespace LiveStandup.Shared.Models
                 var culture = CultureInfo.CurrentCulture;
                 var regex = new Regex("dddd[,]{0,1}");
                 var shortDatePattern = regex.Replace(culture.DateTimeFormat.LongDatePattern.Replace("MMMM", "MMM"), string.Empty).Trim();
-                return ScheduledStartTime.ToString($"{shortDatePattern}", culture);
-               
+                return ScheduledStartTime.ToString($"{shortDatePattern}", culture);               
             }
         }
     }
