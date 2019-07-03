@@ -17,6 +17,8 @@ using LiveStandup.Shared.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
+//csharpfritz cheered 100 bits on July 3rd 2019
+
 namespace LiveStandup.Web.Services
 {
     /// <summary>
@@ -29,6 +31,7 @@ namespace LiveStandup.Web.Services
         string YouTubeApiKey;
         string YouTubeAppName;
         string YouTubePlaylistId;
+        string DefaultThumbnail;
 
 
         public YouTubeShowsService(IConfiguration configuration)
@@ -36,6 +39,7 @@ namespace LiveStandup.Web.Services
             YouTubeApiKey = configuration["YouTube:Key"];
             YouTubeAppName = configuration["YouTube:AppName"];
             YouTubePlaylistId = configuration["YouTube:PlaylistId"];
+            DefaultThumbnail = configuration[nameof(DefaultThumbnail)];
         }
 
         public async Task UpdateLiveStreamingDetails(YouTubeService youtubeService, IEnumerable<Show> shows)
@@ -74,7 +78,7 @@ namespace LiveStandup.Web.Services
             //var shows = new List<Show>(numberOfShows);
 
 
-            var request = youtubeService.PlaylistItems.List("snippet");
+            var request = youtubeService.PlaylistItems.List("snippet,status");
             request.PlaylistId = YouTubePlaylistId;
             request.MaxResults = numberOfShows;
             //playlistItemsListRequest.PageToken = nextPageToken;
@@ -82,24 +86,29 @@ namespace LiveStandup.Web.Services
             // Retrieve the list of videos uploaded to the authenticated user's channel.
             var response = await request.ExecuteAsync();
 
-
-
-            var shows = response.Items.Select(item => new Show
-            {
-                Id = item.Snippet.ResourceId.VideoId,
-                Title = item.Snippet.Title,
-                Description = item.Snippet.Description,
-                ThumbnailUrl = item.Snippet.Thumbnails.Medium.Url,
-                Url = GetVideoUrl(item.Snippet.ResourceId.VideoId,
-                    YouTubePlaylistId, item.Snippet.Position.GetValueOrDefault())
-            }).ToList();
+            var shows = PlaylistItemsToShows(response);
 
             await UpdateLiveStreamingDetails(youtubeService, shows);
-            
+
             return shows.OrderByDescending(s => s.ScheduledStartTime);
         }
 
-
+        internal List<Show> PlaylistItemsToShows(PlaylistItemListResponse response)
+        {
+            return response.Items
+                .Where(item =>
+                item.Status?.PrivacyStatus == "public" &&
+                item.Snippet != null)
+                .Select(item => new Show
+                {
+                    Id = item.Snippet.ResourceId.VideoId,
+                    Title = item.Snippet.Title,
+                    Description = item.Snippet.Description,
+                    ThumbnailUrl = item.Snippet.Thumbnails?.Medium?.Url ?? item.Snippet.Thumbnails?.Standard?.Url ?? DefaultThumbnail,
+                    Url = GetVideoUrl(item.Snippet.ResourceId.VideoId,
+                    YouTubePlaylistId, item.Snippet.Position.GetValueOrDefault())
+                }).ToList();
+        }
 
         public static string GetVideoUrl(string id, string playlistId, long itemIndex)
         {
