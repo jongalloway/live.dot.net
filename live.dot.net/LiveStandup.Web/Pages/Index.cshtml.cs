@@ -23,7 +23,6 @@ namespace LiveStandup.Web.Pages
         public IEnumerable<Show> Shows { get; private set; }
         public Show UpcomingShow { get; private set; }
         public Show OnAirShow { get; private set; }
-
         public bool HasUpcomingShow => UpcomingShow != null;
         public bool IsOnAir => OnAirShow != null;
 

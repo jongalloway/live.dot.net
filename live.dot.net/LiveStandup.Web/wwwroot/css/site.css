@@ -96,6 +96,25 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
+/*.jumbotron {
+    background: #000 url(home-bg.jpg) top center repeat-x;
+    background-size: 920px;
+    color: #fff;
+    min-height: 350px;
+}
+
+@media (min-width: 920px) {
+    .jumbotron {
+        background-size: 100%;
+    }
+}
+
+@media (min-width: 1440px) {
+    .jumbotron {
+        background-size: 1440px;
+    }
+}*/
+
 .youtube-show > a > div {
     background: #000;
 }
@@ -104,4 +123,22 @@ body {
     opacity: 0.6;
 }
 
+.liveshow-embed {
+    margin-top: 30px;
+    -webkit-box-shadow: 0 0 5px 5px rgba(255, 255, 255, .4);
+    -moz-box-shadow: 0 0 5px 5px rgba(255, 255, 255, .4);
+    box-shadow: 0 0 5px 5px rgba(255, 255, 255, .4);
+    background: #212121;
+}
 
+.liveshow-embed * {
+    background: #212121;
+}
+
+.liveshow-embed img {
+    cursor: pointer;
+}
+
+.liveshow-embed img:hover {
+    opacity: .6;
+}
