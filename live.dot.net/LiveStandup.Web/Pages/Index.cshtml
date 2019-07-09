@@ -59,8 +59,12 @@
         }
 
         <div class="col-md-4">
-            <div class="card m-2 shadow" style="width:18rem;">
-                <img src="@show.ThumbnailUrl" class="card-img-top" alt="...">
+            <div class="card m-2 shadow youtube-show" style="width:18rem;">
+                <a href="@Model.Url" title="Watch this episode">
+                    <div>
+                        <img src="@show.ThumbnailUrl" class="card-img-top" alt="@show.Title">
+                    </div>
+                </a>
                 @if (show.IsNew)
                 {
                     <span class="badge badge-pill p-2 pr-3 pl-3 badge-success top-right">New</span>
