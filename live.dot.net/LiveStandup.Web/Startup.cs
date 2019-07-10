@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using LiveStandup.Web.Services;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace LiveStandup.Web
 {
@@ -54,7 +56,18 @@ namespace LiveStandup.Web
 
             app.UseHealthChecks("/health");
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            
+            app.UseFileServer();
+            var options = new FileServerOptions
+            {
+                RequestPath = "/node_modules",
+                StaticFileOptions = {FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "node_modules")
+                )},
+                EnableDirectoryBrowsing = true
+            };
+            app.UseFileServer(options);
+            
             app.UseCookiePolicy();
 
             app.UseMvc();
