@@ -142,3 +142,7 @@ body {
 .liveshow-embed img:hover {
     opacity: .6;
 }
+
+.bottom-buffer {
+    margin-bottom: 30px;
+}

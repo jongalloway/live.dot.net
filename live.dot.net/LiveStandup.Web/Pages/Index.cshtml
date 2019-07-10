@@ -78,8 +78,8 @@
             continue;
         }
 
-        <div class="col-md-4">
-            <div class="card m-2 shadow youtube-show" style="width:18rem;">
+        <div class="col-sm-6 col-md-4">
+            <div class="card shadow youtube-show bottom-buffer">
                 <a href="@Model.Url" title="Watch this episode">
                     <div>
                         <img src="@show.ThumbnailUrl" class="card-img-top" alt="@show.Title">
@@ -99,10 +99,10 @@
 
                     @if (!string.IsNullOrEmpty(show.Category))
                     {
-                        <span class="badge badge-pill p-2 pr-3 pl-3 badge-primary">@show.Category</span>
+                        <p><span class="badge badge-pill p-2 pr-3 pl-3 badge-primary">@show.Category</span></p>
                     }
 
-                    <h5 class="card-title">@show.DisplayTitle</h5>
+                    <p><h5 class="card-title">@show.DisplayTitle</h5></p>
                     <a href="@show.Url" class="btn btn-primary">Go somewhere</a>
                 </div>
                 <div class="card-footer text-muted text-center">
@@ -126,17 +126,12 @@
 <script src="https://apis.google.com/js/platform.js"></script>
 
 <div class="container">
-    <center>
-        <h3>Subscribe:</h3>
-        <div class="container">
-            <div class="row">
-                <div class="col align-middle text-right">
-                    <div class="g-ytsubscribe" data-channelid="UCiaZbznpWV1o-KLxj8zqR6A" data-layout="full" data-count="default"></div>
-                </div>
-                <div class="col align-middle text-left">
-                    <a href="https://twitch.tv/VisualStudio"><img height="30px" src="~/images/twitch.svg" /></a>
-                </div>
-            </div>
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col-auto">
+            <div class="g-ytsubscribe" data-channelid="UCiaZbznpWV1o-KLxj8zqR6A" data-layout="full" data-count="default"></div>
         </div>
-    </center>
+        <div class="col-auto">
+            <a href="https://twitch.tv/VisualStudio"><img height="30px" src="~/images/twitch.svg" /></a>
+        </div>
+    </div>
 </div>
