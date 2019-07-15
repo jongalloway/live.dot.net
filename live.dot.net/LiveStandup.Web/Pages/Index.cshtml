@@ -14,19 +14,26 @@
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe class="embed-responsive-item" frameborder="0" src="@($"https://www.youtube.com/embed/{Model.OnAirShow.Id}?rel=0")" allowfullscreen></iframe>
                 </div>
-                <center>
-                    <h4>Chat with the team on:</h4>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col align-middle text-right">
-                                <a href="@($"https://www.youtube.com/{Model.OnAirShow.Id}?rel=0")"><img height="30" src="~/images/youtube.png" /></a>
-                            </div>
-                            <div class="col align-middle text-left">
-                                <a href="https://twitch.tv/VisualStudio"><img height="30" src="~/images/twitch.svg" /></a>
-                            </div>
-                        </div>
+
+
+
+                <div class="container">
+                    <div class="row justify-content-md-center align-items-center">
+                        <span class="m-2">
+                            Chat on:
+                        </span>
+                        <span class="m-2">
+                            <a href="@($" https://www.youtube.com/{Model.OnAirShow.Id}?rel=0")">
+                                <i class="fab fa-3x fa-youtube"></i>
+                            </a>
+                        </span>
+                        <span class="m-2">
+                            <a href="https://twitch.tv/VisualStudio">
+                                <i class="fab fa-3x fa-twitch"></i>
+                            </a>
+                        </span>
                     </div>
-                </center>
+                </div>
             </div>
         }
         else if (Model.HasUpcomingShow)
@@ -78,60 +85,61 @@
             continue;
         }
 
-        <div class="col-sm-6 col-md-4">
-            <div class="card shadow youtube-show bottom-buffer">
-                <a href="@Model.Url" title="Watch this episode">
-                    <div>
-                        <img src="@show.ThumbnailUrl" class="card-img-top" alt="@show.Title">
-                    </div>
-                </a>
-                @if (show.IsNew)
-                {
-                    <span class="badge badge-pill p-2 pr-3 pl-3 badge-success top-right">New</span>
-                }
-                else if (show.IsInFuture)
-                {
-                    <span class="badge badge-pill p-2 pr-3 pl-3 badge-info top-right">Upcoming</span>
-                }
-
-
-                <div class="card-body">
-
-                    @if (!string.IsNullOrEmpty(show.Category))
-                    {
-                        <p><span class="badge badge-pill p-2 pr-3 pl-3 badge-primary">@show.Category</span></p>
-                    }
-
-                    <p><h5 class="card-title">@show.DisplayTitle</h5></p>
-                    <a href="@show.Url" class="btn btn-primary">Go somewhere</a>
+    <div class="col-sm-6 col-md-4 pb-4">
+        <div class="card shadow youtube-show bottom-buffer h-100">
+            <a href="@Model.Url" title="Watch this episode">
+                <div>
+                    <img src="@show.ThumbnailUrl" class="card-img-top" alt="@show.Title">
                 </div>
-                <div class="card-footer text-muted text-center">
-                    @show.ScheduledStartTimeHumanized
+            </a>
+            @if (show.IsNew)
+            {
+                <span class="badge badge-pill p-2 pr-3 pl-3 badge-success top-right">New</span>
+            }
+            else if (show.IsInFuture)
+            {
+                <span class="badge badge-pill p-2 pr-3 pl-3 badge-info top-right">Upcoming</span>
+            }
+
+
+            <div class="card-body">
+
+                @if (!string.IsNullOrEmpty(show.Category))
+                {
+                    <p><span class="badge badge-pill p-2 pr-3 pl-3 badge-primary">@show.Category</span></p>
+                }
+
+                <p><h5 class="card-title">@show.DisplayTitle</h5></p>
+                <a href="@show.Url" class="btn btn-primary">Go somewhere</a>
+            </div>
+            <div class="card-footer text-muted text-center">
+                @show.ScheduledStartTimeHumanized
+            </div>
+        </div>
+    </div>
+     }
+</div>
+
+
+
+        @if (Model.HasUpcomingShow)
+        {
+            <script src="~/js/home.js"></script>
+            <script>
+                (function () {
+                    window.siteJs.setNextShowDetails("nextShowDetails");
+                })();
+            </script>
+        }
+        <script src="https://apis.google.com/js/platform.js"></script>
+
+        <div class="container">
+            <div class="row justify-content-md-center align-items-center">
+                <div class="col-auto">
+                    <div class="g-ytsubscribe" data-channelid="UCiaZbznpWV1o-KLxj8zqR6A" data-layout="full" data-count="default"></div>
+                </div>
+                <div class="col-auto">
+                    <a href="https://twitch.tv/VisualStudio"><img height="30" src="~/images/twitch.svg" /></a>
                 </div>
             </div>
         </div>
-    }
-</div>
-
-
-@if (Model.HasUpcomingShow)
-{
-    <script src="~/js/home.js"></script>
-    <script>
-        (function () {
-            window.siteJs.setNextShowDetails("nextShowDetails");
-        })();
-    </script>
-}
-<script src="https://apis.google.com/js/platform.js"></script>
-
-<div class="container">
-    <div class="row justify-content-md-center align-items-center">
-        <div class="col-auto">
-            <div class="g-ytsubscribe" data-channelid="UCiaZbznpWV1o-KLxj8zqR6A" data-layout="full" data-count="default"></div>
-        </div>
-        <div class="col-auto">
-            <a href="https://twitch.tv/VisualStudio"><img height="30" src="~/images/twitch.svg" /></a>
-        </div>
-    </div>
-</div>

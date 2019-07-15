@@ -25,10 +25,12 @@
       ]
     },
     {
-      "provider": "unpkg",
-      "library": "ionicons@4.5.5",
-      "destination": "wwwroot/lib/ionicons",
-      "files": [ "dist/css/ionicons.min.css" ]
+      "provider": "cdnjs",
+      "library": "font-awesome@5.9.0",
+      "destination": "wwwroot/lib/fontawesome",
+      "files": [
+        "js/all.min.js"
+      ]
     }
   ]
 }  

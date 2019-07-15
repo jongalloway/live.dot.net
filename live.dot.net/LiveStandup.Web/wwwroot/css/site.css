@@ -146,3 +146,15 @@ body {
 .bottom-buffer {
     margin-bottom: 30px;
 }
+
+.fa-twitch {
+    color: #6441a4;
+}
+
+.fa-youtube {
+    color: #f00;
+}
+
+.fa-twitch:hover, .fa-youtube:hover {
+    color: darkslategray;
+}
