@@ -79,7 +79,7 @@
         }
 
         <div class="col-sm-6 col-md-4">
-            <div class="card m-2 shadow youtube-show" style="width:18rem;">
+            <div class="card shadow youtube-show bottom-buffer">
                 <a href="@Model.Url" title="Watch this episode">
                     <div>
                         <img src="@show.ThumbnailUrl" class="card-img-top" alt="@show.Title">
@@ -99,10 +99,10 @@
 
                     @if (!string.IsNullOrEmpty(show.Category))
                     {
-                        <span class="badge badge-pill p-2 pr-3 pl-3 badge-primary">@show.Category</span>
+                        <p><span class="badge badge-pill p-2 pr-3 pl-3 badge-primary">@show.Category</span></p>
                     }
 
-                    <h5 class="card-title">@show.DisplayTitle</h5>
+                    <p><h5 class="card-title">@show.DisplayTitle</h5></p>
                     <a href="@show.Url" class="btn btn-primary">Go somewhere</a>
                 </div>
                 <div class="card-footer text-muted text-center">
