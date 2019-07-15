@@ -1,21 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text.Encodings.Web;
-using System.Threading;
 using System.Threading.Tasks;
-
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Services;
-using Google.Apis.Upload;
-using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using LiveStandup.Shared.Models;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 
 //csharpfritz cheered 100 bits on July 3rd 2019
 
@@ -28,21 +19,18 @@ namespace LiveStandup.Web.Services
     /// </summary>
     public class YouTubeShowsService : IYouTubeShowsService
     {
-        string YouTubeApiKey;
-        string YouTubeAppName;
-        string YouTubePlaylistId;
-        string DefaultThumbnail;
+        private readonly string YouTubePlaylistId;
+        private readonly string DefaultThumbnail;
+        private readonly IYouTubeServiceFactory _youTubeServiceFactory;
 
-
-        public YouTubeShowsService(IConfiguration configuration)
+        public YouTubeShowsService(IConfiguration configuration, IYouTubeServiceFactory youTubeServiceFactory)
         {
-            YouTubeApiKey = configuration["YouTube:Key"];
-            YouTubeAppName = configuration["YouTube:AppName"];
             YouTubePlaylistId = configuration["YouTube:PlaylistId"];
             DefaultThumbnail = configuration[nameof(DefaultThumbnail)];
+            _youTubeServiceFactory = youTubeServiceFactory;
         }
 
-        public async Task UpdateLiveStreamingDetails(YouTubeService youtubeService, IEnumerable<Show> shows)
+        async Task UpdateLiveStreamingDetails(YouTubeService youtubeService, IEnumerable<Show> shows)
         {
 
             var ids = string.Join(',', shows.Select(show => show.Id).ToArray());
@@ -51,9 +39,9 @@ namespace LiveStandup.Web.Services
             request.MaxResults = 25;
 
             var videos = (await request.ExecuteAsync()).Items;
-            
 
-            foreach(var show in shows)
+
+            foreach (var show in shows)
             {
                 var liveData = videos.FirstOrDefault(v => v.Id == show.Id)?.LiveStreamingDetails;
                 if (liveData == null)
@@ -72,11 +60,7 @@ namespace LiveStandup.Web.Services
 
         public async Task<IEnumerable<Show>> GetShows(int numberOfShows = 25)
         {
-            var youtubeService = new YouTubeService(new BaseClientService.Initializer()
-            {
-                ApiKey = YouTubeApiKey,
-                ApplicationName = YouTubeAppName
-            });
+            var youtubeService = _youTubeServiceFactory.GetService();
 
             //var shows = new List<Show>(numberOfShows);
 
@@ -92,11 +76,11 @@ namespace LiveStandup.Web.Services
             var shows = PlaylistItemsToShows(response);
 
             await UpdateLiveStreamingDetails(youtubeService, shows);
-                        
+
             return shows.OrderByDescending(s => s.ScheduledStartTime);
         }
 
-        internal List<Show> PlaylistItemsToShows(PlaylistItemListResponse response)
+        private List<Show> PlaylistItemsToShows(PlaylistItemListResponse response)
         {
             return response.Items
                 .Where(item =>
@@ -113,7 +97,7 @@ namespace LiveStandup.Web.Services
                 }).ToList();
         }
 
-        public static string GetVideoUrl(string id, string playlistId, long itemIndex)
+        private static string GetVideoUrl(string id, string playlistId, long itemIndex)
         {
             var encodedId = UrlEncoder.Default.Encode(id);
             var encodedPlaylistId = UrlEncoder.Default.Encode(playlistId);
@@ -122,7 +106,7 @@ namespace LiveStandup.Web.Services
             return $"https://www.youtube.com/watch?v={encodedId}&list={encodedPlaylistId}&index={encodedItemIndex}";
         }
 
-        public static string GetPlaylistUrl(string playlistId) =>
+        private static string GetPlaylistUrl(string playlistId) =>
             $"https://www.youtube.com/playlist?list={UrlEncoder.Default.Encode(playlistId)}";
 
     }
