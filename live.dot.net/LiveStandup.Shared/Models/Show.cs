@@ -30,7 +30,7 @@ namespace LiveStandup.Shared.Models
 
                 var pieces = Title?.Split('-');
                 if (pieces?.Count() > 2)
-                    shortTitle = pieces.Last();
+                    shortTitle = pieces.Last().Trim();
 
                 return shortTitle;
             }
