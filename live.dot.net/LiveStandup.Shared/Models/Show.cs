@@ -19,29 +19,29 @@ namespace LiveStandup.Shared.Models
         //Format: ".NET Community Standup - Monday, Day Year - Topic
         public string Title { get; set; }
 
-        string shortTitle;
+        string topic;
         [JsonIgnore]
-        public string ShortTitle
+        public string Topic
         {
             get
             {
-                if (!string.IsNullOrWhiteSpace(shortTitle))
-                    return shortTitle;
+                if (!string.IsNullOrWhiteSpace(topic))
+                    return topic;
 
                 var pieces = Title?.Split('-');
                 if (pieces?.Count() > 2)
-                    shortTitle = pieces.Last();
+                    topic = pieces.Last().Trim();
 
-                return shortTitle;
+                return topic;
             }
-            set => shortTitle = value;
+            set => topic = value;
         }
 
         [JsonIgnore]
-        public bool HasTitle => !string.IsNullOrEmpty(ShortTitle);
+        public bool HasDisplayTitle => !string.IsNullOrEmpty(DisplayTitle);
 
         [JsonIgnore]
-        public string DisplayTitle => HasTitle ? ShortTitle : Title;
+        public string DisplayTitle => string.IsNullOrEmpty(Topic) ? Title : Topic;
 
         public string Description { get; set; }
         public DateTime ScheduledStartTime { get; set; }
