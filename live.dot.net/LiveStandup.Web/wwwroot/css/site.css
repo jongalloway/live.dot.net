@@ -115,6 +115,12 @@ body {
     }
 }*/
 
+.grid-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 2.5rem 0.5rem;
+}
+
 .youtube-show > a > div {
     background: #000;
 }
@@ -141,10 +147,6 @@ body {
 
 .liveshow-embed img:hover {
     opacity: .6;
-}
-
-.bottom-buffer {
-    margin-bottom: 30px;
 }
 
 .fa-twitch {
