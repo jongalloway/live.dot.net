@@ -76,7 +76,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="card-deck grid-deck">
     @foreach (var show in Model.Shows)
     {
 
@@ -85,8 +85,7 @@
             continue;
         }
 
-    <div class="col-sm-6 col-md-4 pb-4">
-        <div class="card shadow youtube-show bottom-buffer h-100">
+        <div class="card shadow youtube-show">
             <a href="@show.Url" target="_blank" title="Watch this episode">
                 <div>
                     <img src="@show.ThumbnailUrl" class="card-img-top" alt="@show.Title">
@@ -109,15 +108,14 @@
                     <p><span class="badge badge-pill p-2 pr-3 pl-3 badge-primary">@show.Category</span></p>
                 }
 
-                <p><h5 class="card-title">@show.DisplayTitle</h5></p>
+                <h5 class="card-title">@show.DisplayTitle</h5>
                 <a href="@show.Url" class="btn btn-primary">Go somewhere</a>
             </div>
             <div class="card-footer text-muted text-center">
                 @show.ScheduledStartTimeHumanized
             </div>
         </div>
-    </div>
-     }
+      }
 </div>
 
 
