@@ -13,7 +13,7 @@ namespace LiveStandup.Tests.UnitTests
             var show = new Show();
             
             // Act
-            show.ShortTitle = "Meet the ASP.NET Docs Team!";
+            show.Topic = "Meet the ASP.NET Docs Team!";
             
             //Assert
             Assert.True(show.HasDisplayTitle);
@@ -29,7 +29,7 @@ namespace LiveStandup.Tests.UnitTests
             show.Title = "ASP.NET Community Standup - July 2nd 2019 - Meet the ASP.NET Docs Team!";
             
             //Assert
-            Assert.Equal("Meet the ASP.NET Docs Team!", show.ShortTitle);
+            Assert.Equal("Meet the ASP.NET Docs Team!", show.Topic);
         }
         
         [Fact]
