@@ -13,3 +13,5 @@ Best way is to:
 2. Create a branch
 3. Send a PR from your branch to master
 4. After accepted you can update your master from upstream master
+
+IntelliCode model: https://prod.intellicode.vsengsaas.visualstudio.com/get?m=9B8215C10B9C4776B7AE416512F75CED
