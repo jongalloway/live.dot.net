@@ -109,7 +109,10 @@
                 }
 
                 <h5 class="card-title">@show.DisplayTitle</h5>
-                <a href="@show.Url" class="btn btn-primary">Go somewhere</a>
+                @if (show.HasLinks)
+                { 
+                <a class="btn btn-outline-secondary btn-sm float-right" href="@show.CommunityLinksUrl" target="_blank">Community Links</a>
+                }
             </div>
             <div class="card-footer text-muted text-center">
                 @show.ScheduledStartTimeHumanized

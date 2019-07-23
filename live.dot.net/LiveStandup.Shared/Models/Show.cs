@@ -43,7 +43,30 @@ namespace LiveStandup.Shared.Models
         [JsonIgnore]
         public string DisplayTitle => string.IsNullOrEmpty(Topic) ? Title : Topic;
 
+        string communityLinksUrl;
+        [JsonIgnore]
+        public string CommunityLinksUrl
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Description))
+                    return null;
+
+                if (!string.IsNullOrWhiteSpace(communityLinksUrl))
+                    return communityLinksUrl;
+
+                var match = Regex.Match(Description, 
+                    @"https:\/\/www\.theurlist\.com\/[a-zA-Z0-9\/-]*", 
+                    RegexOptions.Multiline);
+                if (match.Success)
+                    communityLinksUrl = match.Value;
+
+                return communityLinksUrl;
+            }
+            set => communityLinksUrl = value;
+        }
         public string Description { get; set; }
+
         public DateTime ScheduledStartTime { get; set; }
 
         public DateTime? ActualStartTime { get; set; }
@@ -62,6 +85,10 @@ namespace LiveStandup.Shared.Models
         public bool IsOnAir =>
             ActualStartTime.HasValue &&
             !ActualEndTime.HasValue;
+
+        [JsonIgnore]
+        public bool HasLinks =>
+            !string.IsNullOrWhiteSpace(CommunityLinksUrl);
 
         // https://www.youtube.com/watch?v=Pa6qtu1wIs8&list=PL1rZQsJPBU2StolNg0aqvQswETPcYnNKL&index=0
         public string Url { get; set; }
