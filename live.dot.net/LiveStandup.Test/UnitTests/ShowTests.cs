@@ -16,7 +16,7 @@ namespace LiveStandup.Tests.UnitTests
             show.ShortTitle = "Meet the ASP.NET Docs Team!";
             
             //Assert
-            Assert.True(show.HasTitle);
+            Assert.True(show.HasDisplayTitle);
         }
         
         [Fact]

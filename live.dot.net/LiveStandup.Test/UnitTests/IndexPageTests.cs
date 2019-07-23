@@ -44,7 +44,7 @@ namespace LiveStandup.Tests.UnitTests
             var show = actualShows.FirstOrDefault();
             Assert.True(actualShows.Count() == 1);
             Assert.True(show.Title == "ASP.NET Community Standup - July 2nd 2019 - Meet the ASP.NET Docs Team!");
-            Assert.True(show.ShortTitle == "Meet the ASP.NET Docs Team!");
+            Assert.True(show.Topic == "Meet the ASP.NET Docs Team!");
             Assert.True(show.Category == "ASP.NET");
         }
 
@@ -54,7 +54,7 @@ namespace LiveStandup.Tests.UnitTests
         [JsonFileData("sampleData.json", typeof(IEnumerable<Show>))]
         public async Task All_Shows_Have_Title(Show show)
         {
-            Assert.True(show.HasTitle);
+            Assert.True(show.HasDisplayTitle);
         }
     }
 }
