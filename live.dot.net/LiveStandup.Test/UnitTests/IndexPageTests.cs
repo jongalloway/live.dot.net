@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LiveStandup.Shared.Models;
+using LiveStandup.Shared.Services;
 using LiveStandup.Web.Pages;
 using LiveStandup.Web.Services;
 using Moq;
