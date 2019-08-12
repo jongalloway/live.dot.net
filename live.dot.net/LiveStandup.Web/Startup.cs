@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LiveStandup.Shared.Services;
 using LiveStandup.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +34,8 @@ namespace LiveStandup.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSingleton<IYouTubeShowsService, MockYouTubeShowsService>();
+            services.AddHttpClient();
+            services.AddSingleton<IYouTubeShowsService, FunctionsYouTubeService>();
             services.AddHealthChecks();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using LiveStandup.Shared.Models;
 
-namespace LiveStandup.Web.Services
+namespace LiveStandup.Shared.Services
 {
     public interface IYouTubeShowsService
     {

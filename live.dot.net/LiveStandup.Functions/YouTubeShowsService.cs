@@ -14,6 +14,7 @@ using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using LiveStandup.Shared.Models;
+using LiveStandup.Shared.Services;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
@@ -33,13 +34,17 @@ namespace LiveStandup.Web.Services
         string YouTubePlaylistId;
         string DefaultThumbnail;
 
-
-        public YouTubeShowsService(IConfiguration configuration)
+        public YouTubeShowsService()
         {
-            YouTubeApiKey = configuration["YouTube:Key"];
-            YouTubeAppName = configuration["YouTube:AppName"];
-            YouTubePlaylistId = configuration["YouTube:PlaylistId"];
-            DefaultThumbnail = configuration[nameof(DefaultThumbnail)];
+            YouTubeApiKey = GetConfig("YouTubeKey");
+            YouTubeAppName = GetConfig("YouTubeAppName");
+            YouTubePlaylistId = GetConfig("YouTubePlaylistId");
+            DefaultThumbnail = GetConfig(nameof(DefaultThumbnail));
+        }
+
+        private string GetConfig(string name)
+        {
+            return System.Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
         }
 
         public async Task UpdateLiveStreamingDetails(YouTubeService youtubeService, IEnumerable<Show> shows)
