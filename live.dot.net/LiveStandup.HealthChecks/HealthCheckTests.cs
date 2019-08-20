@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace LiveStandup.Tests
+namespace LiveStandup.HealthChecks
 {
     public class HealthCheckTests
         : IClassFixture<WebApplicationFactory<Startup>>

@@ -32,34 +32,41 @@ namespace LiveStandup.Tests.UnitTests
             Assert.Equal("Meet the ASP.NET Docs Team!", show.Topic);
         }
         
-        [Fact]
-        public void ShowIsNew() {
+        [Theory]
+        [InlineData(-.00001, true)]
+        [InlineData(-1, true)]
+        [InlineData(-13.9, true)]
+        [InlineData(-14, false)]
+        [InlineData(-15, false)]
+        public void ShowIsNew(double days, bool isNew) {
             
             // Arrange
             var show = new Show();
             
             // Act
-            show.ScheduledStartTime = DateTime.Parse("2019-07-19T22:45:00Z");
+            show.ScheduledStartTime = DateTime.UtcNow.AddDays(days);
             show.ActualStartTime = null;
-            show.ActualEndTime = DateTime.Parse("2019-07-20T22:45:00Z");;
-            
-            
+            show.ActualEndTime = DateTime.UtcNow.AddDays(days);
+
+
             //Assert
-            Assert.True(show.IsNew);
+            Assert.Equal(isNew, show.IsNew);
         }
         
-        [Fact]
-        public void ShowIsInFuture() {
+        [Theory]
+        [InlineData(1.0, true)]
+        [InlineData(-1.0, false)]
+        public void ShowIsInFuture(double days, bool isFuture) {
             
             // Arrange
             var show = new Show();
             
             // Act
-            show.ScheduledStartTime = DateTime.Parse("2019-07-27T22:45:00Z");
+            show.ScheduledStartTime = DateTime.UtcNow.AddDays(days);
             
             
             //Assert
-            Assert.True(show.IsInFuture);
+            Assert.Equal(isFuture, show.IsInFuture);
         }
         
         [Fact]
