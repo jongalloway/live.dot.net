@@ -39,32 +39,36 @@
         else if (Model.HasUpcomingShow)
         {
             var startTime = Model.UpcomingShow.ScheduledStartTime;
+
             <div id="nextShowDetails"
                  data-utc-year="@startTime.Year"
                  data-utc-month="@(startTime.Month-1)"
                  data-utc-day="@startTime.Day"
                  data-utc-hour="@startTime.Hour"
                  data-utc-min="@startTime.Minute">
-                <h2>Next Episode Streaming Live on</h2>
-                <h2>
+
+
+                <h2>Next @Model.UpcomingShow.Category Live Standup</h2>
+
+                @if (Model.UpcomingShow.HasDisplayTitle)
+                {
+                    <h3>Topic: @Model.UpcomingShow.DisplayTitle</h3>
+                }
+
+                <hr>
+                <h3>
                     <strong data-part="showTime" class="hidden">
                         @startTime.ToString("u")
                     </strong>
-                </h2>
-                <h2>
+                </h3>
+                <h3>
                     <span data-part="countdown">&nbsp;</span>
-                </h2>
+                </h3>
+
             </div>
-            @*<div class="btn-group">
-                    <button id="addToCalendar" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Add to calendar <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="addToCalendar">
-                        <li><a asp-action="GetiCal" asp-protocol="https">Download iCalendar (ICS) file</a></li>
-                        <li><a asp-action="GetiCal" asp-protocol="webcals">Add using webcal</a></li>
-                        <li><a href="@Model.AddToGoogleUrl" target="_blank">Add to Google Calendar</a></li>
-                    </ul>
-                </div>*@
+
+            <hr>
+
             <p>Check back here to watch &amp; ask questions then!</p>
         }
         else
@@ -110,37 +114,37 @@
 
                 <h5 class="card-title">@show.DisplayTitle</h5>
                 @if (show.HasLinks)
-                { 
-                <a class="btn btn-outline-secondary btn-sm float-right" href="@show.CommunityLinksUrl" target="_blank">Community Links</a>
+                {
+                    <a class="btn btn-outline-secondary btn-sm float-right" href="@show.CommunityLinksUrl" target="_blank">Community Links</a>
                 }
             </div>
             <div class="card-footer text-muted text-center">
                 @show.ScheduledStartTimeHumanized
             </div>
         </div>
-      }
+    }
 </div>
 
 
 
-        @if (Model.HasUpcomingShow)
-        {
-            <script src="~/js/home.js"></script>
-            <script>
-                (function () {
-                    window.siteJs.setNextShowDetails("nextShowDetails");
-                })();
-            </script>
-        }
-        <script src="https://apis.google.com/js/platform.js"></script>
+@if (Model.HasUpcomingShow)
+{
+    <script src="~/js/home.js"></script>
+    <script>
+        (function () {
+            window.siteJs.setNextShowDetails("nextShowDetails");
+        })();
+    </script>
+}
+<script src="https://apis.google.com/js/platform.js"></script>
 
-        <div class="container">
-            <div class="row justify-content-md-center align-items-center">
-                <div class="col-auto">
-                    <div class="g-ytsubscribe" data-channelid="UCiaZbznpWV1o-KLxj8zqR6A" data-layout="full" data-count="default"></div>
-                </div>
-                <div class="col-auto">
-                    <a href="https://twitch.tv/VisualStudio"><img height="30" src="~/images/twitch.svg" /></a>
-                </div>
-            </div>
+<div class="container">
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col-auto">
+            <div class="g-ytsubscribe" data-channelid="UCiaZbznpWV1o-KLxj8zqR6A" data-layout="full" data-count="default"></div>
         </div>
+        <div class="col-auto">
+            <a href="https://twitch.tv/VisualStudio"><img height="30" src="~/images/twitch.svg" /></a>
+        </div>
+    </div>
+</div>
