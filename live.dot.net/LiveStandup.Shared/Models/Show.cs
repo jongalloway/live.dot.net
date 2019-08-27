@@ -19,52 +19,14 @@ namespace LiveStandup.Shared.Models
         //Format: ".NET Community Standup - Monday, Day Year - Topic
         public string Title { get; set; }
 
-        string topic;
-        [JsonIgnore]
-        public string Topic
-        {
-            get
-            {
-                if (!string.IsNullOrWhiteSpace(topic))
-                    return topic;
+        public string Topic { get; set; }
 
-                var pieces = Title?.Split('-');
-                if (pieces?.Count() > 2)
-                    topic = pieces.Last().Trim();
+        public bool HasDisplayTitle { get; set; }
 
-                return topic;
-            }
-            set => topic = value;
-        }
+        public string DisplayTitle { get; set; }
 
-        [JsonIgnore]
-        public bool HasDisplayTitle => !string.IsNullOrEmpty(DisplayTitle);
+        public string CommunityLinksUrl { get; set; }
 
-        [JsonIgnore]
-        public string DisplayTitle => string.IsNullOrEmpty(Topic) ? Title : Topic;
-
-        string communityLinksUrl;
-        [JsonIgnore]
-        public string CommunityLinksUrl
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(Description))
-                    return null;
-
-                if (!string.IsNullOrWhiteSpace(communityLinksUrl))
-                    return communityLinksUrl;
-
-                var match = Regex.Match(Description, 
-                    @"https:\/\/www\.theurlist\.com\/[a-zA-Z0-9\/-]*", 
-                    RegexOptions.Multiline);
-                if (match.Success)
-                    communityLinksUrl = match.Value;
-
-                return communityLinksUrl;
-            }
-            set => communityLinksUrl = value;
-        }
         public string Description { get; set; }
 
         public DateTime ScheduledStartTime { get; set; }
@@ -73,22 +35,7 @@ namespace LiveStandup.Shared.Models
 
         public DateTime? ActualEndTime { get; set; }
 
-        [JsonIgnore]
-        public bool IsNew => !IsInFuture &&
-                             !IsOnAir &&
-                             (DateTime.UtcNow - ScheduledStartTime).TotalDays <= 14;
-
-        [JsonIgnore]
-        public bool IsInFuture => ScheduledStartTime > DateTime.UtcNow;
-
-        [JsonIgnore]
-        public bool IsOnAir =>
-            ActualStartTime.HasValue &&
-            !ActualEndTime.HasValue;
-
-        [JsonIgnore]
-        public bool HasLinks =>
-            !string.IsNullOrWhiteSpace(CommunityLinksUrl);
+        public bool HasLinks { get; set; }
 
         // https://www.youtube.com/watch?v=Pa6qtu1wIs8&list=PL1rZQsJPBU2StolNg0aqvQswETPcYnNKL&index=0
         public string Url { get; set; }
@@ -97,36 +44,7 @@ namespace LiveStandup.Shared.Models
         public string ThumbnailUrl { get; set; }
 
         // ASP.NET, Xamarin, Desktop, Visual Studio
-        string category;
-        public string Category
-        {
-            get
-            {
-                if (!string.IsNullOrWhiteSpace(category))
-                    return category;
-
-                if (Title.StartsWith("ASP.NET"))
-                    category = "ASP.NET";
-
-                if (Title.StartsWith("Visual Studio") || Title.StartsWith("Tooling"))
-                    category = "Visual Studio";
-
-                if (Title.StartsWith("Xamarin") || Title.StartsWith("Mobile"))
-                    category = "Xamarin";
-
-                if (Title.StartsWith("Languages"))
-                    category = "Languages & Runtime";
-
-                if (Title.StartsWith("Windows Desktop") || Title.StartsWith("Desktop"))
-                    category = "Desktop";
-
-                if (Title.StartsWith("Cloud"))
-                    category = "Cloud";
-
-                return category;
-            }
-            set => category = value;
-        }
+        public string Category { get; set; }
 
         [JsonIgnore]
         public string ScheduledStartTimeHumanized
@@ -142,5 +60,18 @@ namespace LiveStandup.Shared.Models
                 return ScheduledStartTime.ToString($"{shortDatePattern}", culture);               
             }
         }
+
+        [JsonIgnore]
+        public bool IsNew => !IsInFuture &&
+                     !IsOnAir &&
+                     (DateTime.UtcNow - ScheduledStartTime).TotalDays <= 14;
+
+        [JsonIgnore]
+        public bool IsInFuture => ScheduledStartTime > DateTime.UtcNow;
+
+        [JsonIgnore]
+        public bool IsOnAir =>
+            ActualStartTime.HasValue &&
+            !ActualEndTime.HasValue;
     }
 }
