@@ -121,67 +121,15 @@ namespace LiveStandup.Web.Services
                     Description = item.Snippet.Description,
                     ThumbnailUrl = item.Snippet.Thumbnails?.Medium?.Url ?? item.Snippet.Thumbnails?.Standard?.Url ?? DefaultThumbnail,
                     Url = GetVideoUrl(item.Snippet.ResourceId.VideoId,
-                    YouTubePlaylistId, item.Snippet.Position.GetValueOrDefault()),
-                    CommunityLinksUrl = GetCommunityLinksUrl(item.Snippet.Description)
+                    YouTubePlaylistId, item.Snippet.Position.GetValueOrDefault())
                 }).ToList();
 
             foreach (var item in items)
             {
-                // Calculating topic
-                var pieces = item.Title?.Split('-');
-                if (pieces?.Count() > 2)
-                    item.Topic = pieces.Last().Trim();
-
-                item.DisplayTitle = string.IsNullOrEmpty(item.Topic) ? item.Title : item.Topic;
-                item.HasDisplayTitle = !string.IsNullOrEmpty(item.DisplayTitle);
-                item.HasLinks = !string.IsNullOrWhiteSpace(item.CommunityLinksUrl);
-                item.Category = GetCategory(item.Title);
+                item.SetCalculateShowFields();
             }
 
             return items;
-        }
-
-        private string GetCategory(string title)
-        {
-            if (title.StartsWith("ASP.NET"))
-                return  "ASP.NET";
-
-            if (title.StartsWith("Visual Studio") || title.StartsWith("Tooling"))
-                return  "Visual Studio";
-
-            if (title.StartsWith("Xamarin") || title.StartsWith("Mobile"))
-                return  "Xamarin";
-
-            if (title.StartsWith("Languages"))
-                return  "Languages & Runtime";
-
-            if (title.StartsWith("Windows Desktop") || title.StartsWith("Desktop"))
-                return  "Desktop";
-
-            if (title.StartsWith("Cloud"))
-                return  "Cloud";
-
-            return null;
-        }
-
-        private string GetCommunityLinksUrl(string description)
-        {
-            if (string.IsNullOrWhiteSpace(description))
-                return null;
-
-            var match = Regex.Match(description,
-                @"https:\/\/www\.theurlist\.com\/[a-zA-Z0-9\/-]*",
-                RegexOptions.Multiline);
-            if (match.Success)
-                return match.Value;
-
-            match = Regex.Match(description,
-                @"https:\/\/www\.one-tab\.com\/[a-zA-Z0-9\/-]*",
-                RegexOptions.Multiline);
-            if (match.Success)
-                return match.Value;
-
-            return null;
         }
 
         public static string GetVideoUrl(string id, string playlistId, long itemIndex)

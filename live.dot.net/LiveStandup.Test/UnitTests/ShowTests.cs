@@ -14,7 +14,8 @@ namespace LiveStandup.Tests.UnitTests
             
             // Act
             show.Topic = "Meet the ASP.NET Docs Team!";
-            
+            show.SetCalculateShowFields();
+
             //Assert
             Assert.True(show.HasDisplayTitle);
         }
@@ -27,7 +28,8 @@ namespace LiveStandup.Tests.UnitTests
             
             // Act
             show.Title = "ASP.NET Community Standup - July 2nd 2019 - Meet the ASP.NET Docs Team!";
-            
+            show.SetCalculateShowFields();
+
             //Assert
             Assert.Equal("Meet the ASP.NET Docs Team!", show.Topic);
         }
@@ -77,7 +79,7 @@ namespace LiveStandup.Tests.UnitTests
             
             // Act
             show.Title = "ASP.NET Community Standup - July 2nd 2019 - Meet the ASP.NET Docs Team!";
-            
+            show.SetCalculateShowFields();
             
             //Assert
             Assert.Equal("ASP.NET", show.Category);
