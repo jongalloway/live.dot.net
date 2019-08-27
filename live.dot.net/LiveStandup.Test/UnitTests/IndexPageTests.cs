@@ -19,20 +19,23 @@ namespace LiveStandup.Tests.UnitTests
             // Arrange
             var youtubeService = Mock.Of<IYouTubeShowsService>();
             var youtubeServiceMock = Mock.Get(youtubeService);
+            var calcShow = new Show
+            {
+                Id = "hPjsCrUKumo",
+                Title = "ASP.NET Community Standup - July 2nd 2019 - Meet the ASP.NET Docs Team!",
+                Description = "Join members from the ASP.NET teams for our community standup covering great community contributions for ASP.NET, ASP.NET Core, and more.\n\nCommunity links for this week: https://www.theurlist.com/aspnet-standup-2019-07-02",
+                ScheduledStartTime = DateTime.Parse("2019-07-16T22:45:00Z"),
+                ActualStartTime = DateTime.Parse("2019-07-16T22:45:00Z"),
+                ActualEndTime = DateTime.Now,
+                Url = "https://www.youtube.com/watch?v=hPjsCrUKumo&list=PL1rZQsJPBU2St9-Mz1Kaa7rofciyrwWVx&index=0",
+                ThumbnailUrl = "https://i.ytimg.com/vi/hPjsCrUKumo/mqdefault.jpg",
+                Category = "ASP.NET"
+            };
+            calcShow.SetCalculateShowFields();
+
             youtubeServiceMock.Setup(m => m.GetShows(25)).ReturnsAsync((new List<Show>
             {
-                new Show
-                {
-                    Id = "hPjsCrUKumo",
-                    Title = "ASP.NET Community Standup - July 2nd 2019 - Meet the ASP.NET Docs Team!",
-                    Description = "Join members from the ASP.NET teams for our community standup covering great community contributions for ASP.NET, ASP.NET Core, and more.\n\nCommunity links for this week: https://www.theurlist.com/aspnet-standup-2019-07-02",
-                    ScheduledStartTime = DateTime.Parse("2019-07-16T22:45:00Z"),
-                    ActualStartTime = DateTime.Parse("2019-07-16T22:45:00Z"),
-                    ActualEndTime = DateTime.Now,
-                    Url = "https://www.youtube.com/watch?v=hPjsCrUKumo&list=PL1rZQsJPBU2St9-Mz1Kaa7rofciyrwWVx&index=0",
-                    ThumbnailUrl = "https://i.ytimg.com/vi/hPjsCrUKumo/mqdefault.jpg",
-                    Category = "ASP.NET"
-                }
+                calcShow
             }));
             
             var pageModel = new IndexModel(youtubeServiceMock.Object);
@@ -55,6 +58,7 @@ namespace LiveStandup.Tests.UnitTests
         [JsonFileData("sampleData.json", typeof(IEnumerable<Show>))]
         public async Task All_Shows_Have_Title(Show show)
         {
+            show.SetCalculateShowFields();
             Assert.True(show.HasDisplayTitle);
         }
     }
