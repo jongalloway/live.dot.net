@@ -83,10 +83,13 @@ namespace LiveStandup.Shared.Models
                 // else the data may not be fresh, so use schedule time.
                 // if it is 5 minutes until schedule and has been less than 2 hours then do it
                 var scheduled = ScheduledStartTime.Value;
-                hasStarted = DateTime.UtcNow > scheduled.AddMinutes(-5) && DateTime.UtcNow < scheduled.AddHours(2);
-
-                return hasStarted;
+                return CheckHasStarted(DateTime.UtcNow, scheduled);
             }
+        }
+
+        public static bool CheckHasStarted(DateTime dateTimeNow, DateTime scheduled)
+        {
+            return dateTimeNow > scheduled.AddMinutes(-5) && dateTimeNow < scheduled.AddHours(2);
         }
     }
 }
