@@ -34,12 +34,12 @@ namespace LiveStandup.Functions
         }
 
         [FunctionName(nameof(UpdateShowsTimer))]
-        public static async Task<HttpResponseMessage> UpdateShowsTimer(
+        public static async Task UpdateShowsTimer(
            [TimerTrigger("0 */5 * * * *")]TimerInfo myTimer,
            [Blob("livestandup/shows.json", FileAccess.Write, Connection = "AzureWebJobsStorage")]Stream outBlob,
            ILogger log)
         {
-            return await UpdateShowsAsync(outBlob, log);
+            await UpdateShowsAsync(outBlob, log);
         }
 
         private static async Task<HttpResponseMessage> UpdateShowsAsync(Stream outBlob, ILogger log)
