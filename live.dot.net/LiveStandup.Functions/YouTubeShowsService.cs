@@ -30,16 +30,16 @@ namespace LiveStandup.Web.Services
     /// </summary>
     public class YouTubeShowsService : IYouTubeShowsService
     {
-        string YouTubeApiKey;
-        string YouTubeAppName;
-        string YouTubePlaylistId;
-        string DefaultThumbnail;
+        readonly string YouTubeKey;
+        readonly string YouTubeAppName;
+        readonly string YouTubePlaylistId;
+        readonly string DefaultThumbnail;
 
         public YouTubeShowsService()
         {
-            YouTubeApiKey = GetConfig("YouTubeKey");
-            YouTubeAppName = GetConfig("YouTubeAppName");
-            YouTubePlaylistId = GetConfig("YouTubePlaylistId");
+            YouTubeKey = GetConfig(nameof(YouTubeKey));
+            YouTubeAppName = GetConfig(nameof(YouTubeAppName));
+            YouTubePlaylistId = GetConfig(nameof(YouTubePlaylistId));
             DefaultThumbnail = GetConfig(nameof(DefaultThumbnail));
         }
 
@@ -86,7 +86,7 @@ namespace LiveStandup.Web.Services
         {
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
-                ApiKey = YouTubeApiKey,
+                ApiKey = YouTubeKey,
                 ApplicationName = YouTubeAppName
             });
 
@@ -121,7 +121,8 @@ namespace LiveStandup.Web.Services
                     Description = item.Snippet.Description,
                     ThumbnailUrl = item.Snippet.Thumbnails?.Medium?.Url ?? item.Snippet.Thumbnails?.Standard?.Url ?? DefaultThumbnail,
                     Url = GetVideoUrl(item.Snippet.ResourceId.VideoId,
-                    YouTubePlaylistId, item.Snippet.Position.GetValueOrDefault())
+                    YouTubePlaylistId, item.Snippet.Position.GetValueOrDefault()),
+                    ScheduledStartTime = item.Snippet.PublishedAt.HasValue ? item.Snippet.PublishedAt : null
                 }).ToList();
 
             foreach (var item in items)
