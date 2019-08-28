@@ -26,10 +26,23 @@ namespace LiveStandup.Functions
 
         [FunctionName(nameof(UpdateShows))]
         public static async Task<HttpResponseMessage> UpdateShows(
-            [TimerTrigger("0 */5 * * * *")]TimerInfo myTimer,
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequest req,
             [Blob("livestandup/shows.json", FileAccess.Write, Connection = "AzureWebJobsStorage")]Stream outBlob,
             ILogger log)
+        {
+            return await UpdateShowsAsync(outBlob, log);
+        }
+
+        [FunctionName(nameof(UpdateShowsTimer))]
+        public static async Task<HttpResponseMessage> UpdateShowsTimer(
+           [TimerTrigger("0 */5 * * * *")]TimerInfo myTimer,
+           [Blob("livestandup/shows.json", FileAccess.Write, Connection = "AzureWebJobsStorage")]Stream outBlob,
+           ILogger log)
+        {
+            return await UpdateShowsAsync(outBlob, log);
+        }
+
+        private static async Task<HttpResponseMessage> UpdateShowsAsync(Stream outBlob, ILogger log)
         {
             try
             {
