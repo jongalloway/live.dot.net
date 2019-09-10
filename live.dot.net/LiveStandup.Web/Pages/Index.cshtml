@@ -129,12 +129,14 @@
 
 @if (Model.HasUpcomingShow)
 {
-    <script src="~/js/home.js"></script>
-    <script>
-        (function () {
-            window.siteJs.setNextShowDetails("nextShowDetails");
-        })();
-    </script>
+    @section Scripts {
+        <script src="~/js/home.js"></script>
+        <script>
+            (function () {
+                window.siteJs.setNextShowDetails("nextShowDetails");
+            })();
+        </script>
+    }
 }
 <script src="https://apis.google.com/js/platform.js"></script>
 
