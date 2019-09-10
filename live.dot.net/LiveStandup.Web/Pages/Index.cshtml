@@ -38,7 +38,7 @@
         }
         else if (Model.HasUpcomingShow)
         {
-            var startTime = Model.UpcomingShow.ScheduledStartTime;
+            var startTime = Model.UpcomingShow.ScheduledStartTime.Value;
 
             <div id="nextShowDetails"
                  data-utc-year="@startTime.Year"

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net.Http;
 using LiveStandup.Web.Services;
+using System.Net;
 
 namespace LiveStandup.Functions
 {
@@ -24,10 +25,24 @@ namespace LiveStandup.Functions
         }
 
         [FunctionName(nameof(UpdateShows))]
-        public static async Task UpdateShows(
+        public static async Task<HttpResponseMessage> UpdateShows(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequest req,
             [Blob("livestandup/shows.json", FileAccess.Write, Connection = "AzureWebJobsStorage")]Stream outBlob,
             ILogger log)
+        {
+            return await UpdateShowsAsync(outBlob, log);
+        }
+
+        [FunctionName(nameof(UpdateShowsTimer))]
+        public static async Task UpdateShowsTimer(
+           [TimerTrigger("0 */5 * * * *")]TimerInfo myTimer,
+           [Blob("livestandup/shows.json", FileAccess.Write, Connection = "AzureWebJobsStorage")]Stream outBlob,
+           ILogger log)
+        {
+            await UpdateShowsAsync(outBlob, log);
+        }
+
+        private static async Task<HttpResponseMessage> UpdateShowsAsync(Stream outBlob, ILogger log)
         {
             try
             {
@@ -50,7 +65,10 @@ namespace LiveStandup.Functions
             catch (Exception ex)
             {
                 log.LogError(ex, "Unable to get show feed");
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
+
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
 }

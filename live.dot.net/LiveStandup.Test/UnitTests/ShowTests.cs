@@ -33,9 +33,42 @@ namespace LiveStandup.Tests.UnitTests
             //Assert
             Assert.Equal("Meet the ASP.NET Docs Team!", show.Topic);
         }
-        
+
+        [Fact]
+        public void ShowIsOnAirData()
+        {
+
+            // Arrange
+            var show = new Show();
+
+            // Act
+            show.ScheduledStartTime = DateTime.UtcNow;
+            show.ActualStartTime = DateTime.UtcNow;
+            show.ActualEndTime = null;
+
+
+            //Assert
+            Assert.True(show.IsOnAir);
+        }
+
         [Theory]
-        [InlineData(-.00001, true)]
+        [InlineData(-6, false)]
+        [InlineData(-4, true)]
+        [InlineData(0, true)]
+        [InlineData(60, true)]
+        [InlineData(119, true)]
+        [InlineData(121, false)]
+        public void ShowIsOnAirNoData(double minutes, bool isOnAir)
+        {
+
+            var hasStarted = Show.CheckHasStarted(DateTime.UtcNow.AddMinutes(minutes), DateTime.UtcNow);
+            
+                //Assert
+            Assert.Equal(isOnAir, hasStarted);
+        }
+
+        [Theory]
+        [InlineData(-.09, true)]
         [InlineData(-1, true)]
         [InlineData(-13.9, true)]
         [InlineData(-14, false)]
