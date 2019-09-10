@@ -27,6 +27,8 @@ namespace LiveStandup.Web.Pages
         public bool HasUpcomingShow => UpcomingShow != null;
         public bool IsOnAir => OnAirShow != null;
 
+        public string MoreShowsUrl => "https://www.youtube.com/playlist?list=PL1rZQsJPBU2St9-Mz1Kaa7rofciyrwWVx";
+
         IYouTubeShowsService youTubeService;
         public IndexModel(IYouTubeShowsService youTubeService)
         {

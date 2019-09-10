@@ -9,13 +9,16 @@
     <div class="next-episode text-center">
         @if (Model.IsOnAir)
         {
-            <h2>On AIR!</h2>
+            <h2>@Model.OnAirShow.Category Live Standup</h2>
+
+            @if (Model.OnAirShow.HasDisplayTitle)
+            {
+                <h3>Topic: @Model.OnAirShow.DisplayTitle</h3>
+            }
             <div class="container-fluid">
                 <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" frameborder="0" src="@($"https://www.youtube.com/embed/{Model.OnAirShow.Id}?rel=0")" allowfullscreen></iframe>
+                    <iframe class="embed-responsive-item" frameborder="0" src="@($"https://www.youtube.com/embed/{Model.OnAirShow.Id}?autoplay=1")" allowfullscreen></iframe>
                 </div>
-
-
 
                 <div class="container">
                     <div class="row justify-content-md-center align-items-center">
@@ -23,7 +26,7 @@
                             Chat on:
                         </span>
                         <span class="m-2">
-                            <a href="@($" https://www.youtube.com/{Model.OnAirShow.Id}?rel=0")">
+                            <a href="@($"https://www.youtube.com/watch?v={Model.OnAirShow.Id}")">
                                 <i class="fab fa-3x fa-youtube"></i>
                             </a>
                         </span>
@@ -126,7 +129,6 @@
 </div>
 
 
-
 @if (Model.HasUpcomingShow)
 {
     @section Scripts {
@@ -141,6 +143,13 @@
 <script src="https://apis.google.com/js/platform.js"></script>
 
 <div class="container">
+    <br />
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <a href="@Model.MoreShowsUrl" class="btn btn-primary">See More Episodes</a>
+        </div>
+    </div>
+    <br />
     <div class="row justify-content-md-center align-items-center">
         <div class="col-auto">
             <div class="g-ytsubscribe" data-channelid="UCiaZbznpWV1o-KLxj8zqR6A" data-layout="full" data-count="default"></div>
