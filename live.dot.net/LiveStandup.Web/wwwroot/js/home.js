@@ -85,9 +85,8 @@
                 diff = dateDiff(now, futureDate);
 
             if (diff.totalSecs < 0) {
-                //window.console.log('Clearing interval');
-                window.clearInterval(interval);
-                endCallback();
+                //show has started - reload to show video
+                window.location.reload();
                 return;
             }
 
