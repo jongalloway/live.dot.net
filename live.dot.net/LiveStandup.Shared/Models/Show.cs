@@ -74,10 +74,12 @@ namespace LiveStandup.Shared.Models
         {
             get
             {
-                //if we have the real data from YouTube that we have started and not ended then return it.
-                var hasStarted = ActualStartTime.HasValue && !ActualEndTime.HasValue;
+                // if we have started and ended then not on air.
+                if (ActualStartTime.HasValue && ActualEndTime.HasValue)
+                    return false;
 
-                if (hasStarted)
+                //if we have the real data from YouTube that we have started and not ended then return it.
+                if (ActualStartTime.HasValue && !ActualEndTime.HasValue)
                     return true;
 
                 // else the data may not be fresh, so use schedule time.
