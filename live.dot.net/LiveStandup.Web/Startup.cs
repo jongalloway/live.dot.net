@@ -54,6 +54,14 @@ namespace LiveStandup.Web
                 app.UseHsts();
             }
 
+            app.Use((context, next) =>
+            {
+                // Prevents caching of dynamic content in Azure Front Door
+                context.Response.Headers["Cache-Control"] = "no-store";
+
+                return next();
+            });
+
             app.UseHealthChecks("/health");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
