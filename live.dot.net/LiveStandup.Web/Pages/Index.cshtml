@@ -88,7 +88,7 @@
     </div>
 </div>
 
-<div class="card-deck grid-deck">
+<div class="container mx-auto card-deck grid-deck" style="width:75%">
     @foreach (var show in Model.Shows)
     {
 
@@ -97,7 +97,7 @@
             continue;
         }
 
-        <div class="card shadow youtube-show">
+        <div class="card youtube-show">
             <a href="@show.Url" target="_blank" title="Watch this episode">
                 <div>
                     <img src="@show.ThumbnailUrl" class="card-img-top" alt="@show.Title" asp-append-version="true">

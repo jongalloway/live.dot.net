@@ -6,6 +6,13 @@
     <UserSecretsId>9ac5e13c-6a7c-479d-b6f6-862da1dc12a8</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="wwwroot\lib\**" />
+    <Content Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="wwwroot\lib\**" />
+    <None Remove="wwwroot\lib\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.40.2.1593" />
@@ -24,11 +31,6 @@
     <Content Update="sampleData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
 </Project>
