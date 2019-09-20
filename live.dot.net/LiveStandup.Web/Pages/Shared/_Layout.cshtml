@@ -5,16 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - LiveStandup.Web</title>
 
-    <environment include="Development">
-        <link href="~/assets/standup/css/bootstrap-custom.min.css" rel="stylesheet" asp-append-version="true" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://dotnet.microsoft.com/static/css/bootstrap-custom.min.css?v=QWs-SERZsFDvArVPve0XlioDss3MwFtbrdb6wNeCbys"
-              asp-fallback-href="~/assets/standup/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-              crossorigin="anonymous"
-              asp-append-version="true" />
-    </environment>
+    <link rel="stylesheet" href="~/assets/standup/css/bootstrap-custom.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/assets/standup/css/site.css" asp-append-version="true" />
 </head>
 <body>
