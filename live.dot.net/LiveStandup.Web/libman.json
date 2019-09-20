@@ -9,12 +9,12 @@
         "jquery.js",
         "jquery.min.map"
       ],
-      "destination": "wwwroot/lib/jquery/dist"
+      "destination": "wwwroot/assets/standup/lib/jquery/dist"
     },
     {
       "provider": "cdnjs",
       "library": "twitter-bootstrap@4.3.1",
-      "destination": "wwwroot/lib/bootstrap/dist/",
+      "destination": "wwwroot/assets/standup/lib/bootstrap/dist/",
       "files": [
         "css/bootstrap.css",
         "css/bootstrap-grid.css",
@@ -27,7 +27,7 @@
     {
       "provider": "cdnjs",
       "library": "font-awesome@5.9.0",
-      "destination": "wwwroot/lib/fontawesome",
+      "destination": "wwwroot/assets/standup/lib/fontawesome",
       "files": [
         "js/all.min.js"
       ]
