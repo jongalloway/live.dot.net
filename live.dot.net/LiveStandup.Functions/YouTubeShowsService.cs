@@ -60,7 +60,7 @@ namespace LiveStandup.Web.Services
             var ids = string.Join(',', shows.Select(show => show.Id).ToArray());
             var request = youtubeService.Videos.List("liveStreamingDetails");
             request.Id = ids;
-            request.MaxResults = 25;
+            request.MaxResults = 24;
 
             var videos = (await request.ExecuteAsync()).Items;
 
