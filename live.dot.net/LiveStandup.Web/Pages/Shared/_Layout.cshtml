@@ -4,31 +4,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-
     <link rel="stylesheet" href="~/assets/standup/css/bootstrap-custom.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/assets/standup/css/site.css" asp-append-version="true" />
 </head>
 <body>
     <partial name="_Header" />
     @RenderBody()
-
     <div id="footerShell">
         <div>
-            <div data-m="{&quot;cN&quot;:&quot;footerArea&quot;,&quot;cT&quot;:&quot;Area_coreuiArea&quot;,&quot;id&quot;:&quot;a2Body&quot;,&quot;sN&quot;:2,&quot;aN&quot;:&quot;Body&quot;}" class="uhf" id="footerArea">
-                <div data-m="{&quot;cN&quot;:&quot;footerRegion&quot;,&quot;cT&quot;:&quot;Region_coreui-region&quot;,&quot;id&quot;:&quot;r1a2&quot;,&quot;sN&quot;:1,&quot;aN&quot;:&quot;a2&quot;}" data-region-key="footerregion" id="footerRegion">
-
-                    <div data-module-id="Category|footerRegion|coreui-region|footerUniversalFooter|coreui-universalfooter" data-m="{&quot;cN&quot;:&quot;footerUniversalFooter&quot;,&quot;cT&quot;:&quot;Module_coreui-universalfooter&quot;,&quot;id&quot;:&quot;m1r1a2&quot;,&quot;sN&quot;:1,&quot;aN&quot;:&quot;r1a2&quot;}" id="footerUniversalFooter">
-
-
-
-
-                        <footer data-m="{&quot;cN&quot;:&quot;Uhf footer_cont&quot;,&quot;cT&quot;:&quot;Container&quot;,&quot;id&quot;:&quot;c1m1r1a2&quot;,&quot;sN&quot;:1,&quot;aN&quot;:&quot;m1r1a2&quot;}" data-footer-footprint="/MSNet/DotnetFooter, fromService: True" data-uhf-mscc-rq="false" class="c-uhff context-uhf" id="uhf-footer">
+            <div  class="uhf" id="footerArea">
+                <div  data-region-key="footerregion" id="footerRegion">
+                    <div id="footerUniversalFooter">
+                        <footer  data-footer-footprint="/MSNet/DotnetFooter, fromService: True" data-uhf-mscc-rq="false" class="c-uhff context-uhf" id="uhf-footer">
                             <div class="c-uhff-base x-hidden-focus">
-
                                 <nav aria-label="Microsoft corporate links">
-                                    <ul data-m="{&quot;cN&quot;:&quot;Corp links_cont&quot;,&quot;cT&quot;:&quot;Container&quot;,&quot;id&quot;:&quot;c1c1m1r1a2&quot;,&quot;sN&quot;:1,&quot;aN&quot;:&quot;c1m1r1a2&quot;}" class="c-list f-bare">
+                                    <ul  class="c-list f-bare">
                                         <li>
-                                            <a href="https://dotnet.microsoft.com/learn/web/what-is-aspnet-core" class="c-uhff-link x-hidden-focus">Powered by .NET Core 3.0.0-preview9-19423-09</a>
+                                            <a href="https://dotnet.microsoft.com/learn/web/what-is-aspnet-core" class="c-uhff-link x-hidden-focus">Powered by .NET Core 3.0.0-rc1-19456-20</a>
                                         </li>
                                         <li>
                                             <a href="https://support.microsoft.com/contactus/" class="c-uhff-link">Contact Microsoft</a>
@@ -45,25 +37,16 @@
                                         <li>
                                             <a href="https://www.microsoft.com/trademarks" class="c-uhff-link">Trademarks</a>
                                         </li>
-
                                         <li class="x-hidden-focus">© Microsoft 2019</li>
-
                                     </ul>
                                 </nav>
                             </div>
-
                         </footer>
-
-
-
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
     <environment include="Development">
         <script src="~/assets/standup/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
         <script src="~/assets/standup/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
@@ -84,7 +67,6 @@
     </environment>
     <script src="~/assets/standup/lib/fontawesome/js/all.min.js" asp-append-version="true"></script>
     <script src="~/assets/standup/js/site.js" asp-append-version="true"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>
