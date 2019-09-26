@@ -56,6 +56,12 @@
 .youtube-show > a > div {
     background: #000;
 }
+@media (min-width: 320px) {
+  .grid-deck {
+    display: grid;
+    grid-template-columns: none;
+  }
+}
 
 .youtube-show > a:hover img {
     opacity: 0.6;
