@@ -121,6 +121,13 @@ body {
     grid-gap: 2.5rem 0.5rem;
 }
 
+@media (min-width: 320px) {
+  .grid-deck {
+    display: grid;
+    grid-template-columns: none;
+  }
+}
+
 .youtube-show > a > div {
     background: #000;
 }
