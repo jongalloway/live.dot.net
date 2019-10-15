@@ -4,12 +4,13 @@ using System.Net;
 using System.Text;
 using System;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace LiveStandup.Functions
 {
     internal class BlobHelpers
     {
-        internal static HttpResponseMessage BlobToHttpResponseMessage(Stream inBlob, ILogger log, string name)
+        internal async static Task<HttpResponseMessage> BlobToHttpResponseMessageAsync(Stream inBlob, ILogger log, string name)
         {
             try
             {
@@ -17,7 +18,7 @@ namespace LiveStandup.Functions
                 var json = string.Empty;
                 using (var reader = new StreamReader(inBlob))
                 {
-                    json = reader.ReadToEnd();
+                    json = await reader.ReadToEndAsync();
                 }
 
                 log.LogInformation($"Finished reading {name} feed from stream.");
