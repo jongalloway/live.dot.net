@@ -16,12 +16,12 @@ namespace LiveStandup.Functions
     public static class LiveStandupFunctions
     {
         [FunctionName(nameof(GetShows))]
-        public static HttpResponseMessage GetShows(
+        public static async Task<HttpResponseMessage> GetShows(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)]HttpRequest req,
             [Blob("livestandup/shows.json", FileAccess.Read, Connection = "AzureWebJobsStorage")]Stream inBlob,
             ILogger log)
         {
-            return BlobHelpers.BlobToHttpResponseMessage(inBlob, log, "shows");
+            return await BlobHelpers.BlobToHttpResponseMessageAsync(inBlob, log, "shows");
         }
 
         [FunctionName(nameof(UpdateShows))]
